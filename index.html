@@ -11,13 +11,18 @@
     const root = document.getElementById("root");
 
     function App() {
-        const [minutes, setMinutes] = React.useState(0);//default값
+        const [amount, setAmount] = React.useState(0);//default값
+        const [flipped, setFlipped] = React.useState(false);
         const onChange = (event) => {
-            setMinutes(event.target.value); //data 업데이트
+            setAmount(event.target.value); //data 업데이트
             // console.log(event.target.value);
         };
-        const reset = (event) => {
-            setMinutes(0);
+        const reset = () => {
+            setAmount(0);
+        };
+        const onFlip = () => {
+            reset()
+            setFlipped(current => !current)
         };
         return (
             <div>
@@ -27,21 +32,26 @@
                 <h1 className="hi">Super Converter</h1>
                 <label htmlFor="minutes">Minutes</label>
                 <input  
-                    value={minutes} //UI 바뀜
+                    value={flipped ? amount*60 : amount} //UI 바뀜
                     id="minutes" 
                     placeholder="Minutes" 
                     type="number"
                     onChange={onChange}
+                    disabled={flipped === true}
                     />
                 <div>
                    <label htmlFor="hours">Hours</label>
                     <input 
-                    value={Math.round(minutes / 60)}
+                    value={flipped ? amount: Math.round(amount / 60)}
                     id="hours"
                     placeholder="Hours" 
-                    type="number"/> 
+                    type="number"
+                    onChange = {onChange}
+                    disabled={flipped === false} //flipped === false -> true:입력못하도록 막음 false: 입력 가능
+                    /> 
                 </div>
                 <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
             </div>
         );
     }
