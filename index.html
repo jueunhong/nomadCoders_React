@@ -11,25 +11,37 @@
     const root = document.getElementById("root");
 
     function App() {
-        const [minutes, setMinutes] = React.useState();
+        const [minutes, setMinutes] = React.useState(0);//default값
         const onChange = (event) => {
-            setMinutes(event.target.value); //이거 안 하면 UI 안바뀜
+            setMinutes(event.target.value); //data 업데이트
             // console.log(event.target.value);
+        };
+        const reset = (event) => {
+            setMinutes(0);
         };
         return (
             <div>
+                <div>
+                    
+                </div>
                 <h1 className="hi">Super Converter</h1>
                 <label htmlFor="minutes">Minutes</label>
                 <input  
-                    value={minutes} 
+                    value={minutes} //UI 바뀜
                     id="minutes" 
                     placeholder="Minutes" 
                     type="number"
                     onChange={onChange}
                     />
-                <h4>you want to convert {minutes}</h4>
-                <label htmlFor="hours">Minutes</label>
-                <input for="hours" placeholder="Hours" type="number"/>
+                <div>
+                   <label htmlFor="hours">Hours</label>
+                    <input 
+                    value={Math.round(minutes / 60)}
+                    id="hours"
+                    placeholder="Hours" 
+                    type="number"/> 
+                </div>
+                <button onClick={reset}>Reset</button>
             </div>
         );
     }
