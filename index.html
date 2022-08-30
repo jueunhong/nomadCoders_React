@@ -4,31 +4,33 @@
     <!-- react-dom이 element를 가져다 두는 곳 -->
     <div id="root"></div>
 </body>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script type="text/babel">
     const root = document.getElementById("root");
-    function Btn({text, onClick}) {
+    function Btn({text, fontSize}) {
         return <button 
-        onClick={onClick}
         style={{
             backgroundColor: "tomato",
             color:"white",
             padding:"10px 20px",
             borderRadius: 10,
             border: 0,
-            fontSize: 16
+            fontSize:{fontSize}
+
         }}>{text}</button>
     }
-
+    Btn.propTypes = {
+        text:PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    };
     function App() {
-        const [value, setValue] = React.useState("Save Changes"); //state
-        const changeValue = () => setValue("Revert Changes");
         return (  
             <div>
-                <Btn text={value} onClick={changeValue}/>
-                <Btn text="Continue" />
+                <Btn text="Save Changes" fontSize={18}/>
+                <Btn fontSize={18}/>
             </div>
         );
     }
