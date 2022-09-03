@@ -1108,3 +1108,44 @@ const onSubmit = (event) => {
 - Each child in a list should have a unique "key" prop.
   
   - component의 list 를 render 할 때 고유한 key값을 넣어야함
+  
+  - map 함수의 두번째 인자인 index를 key값으로 넣어줌
+  
+  ```js
+  <ul>
+          {toDos.map((item,index) => <li key={index}>{item}</li>)}
+        </ul>
+  ```
+
+## Coin Tracker
+
+1. coin 정보를 보여주기전에 loading 화면을 띄우고, loading 화면을 지우고 coin 정보를 list로 보여줌
+   - fetch로 API 가져오기
+   
+   - response 를 받아 setCoins 함수로 state변경 후 loading 을 false 로 바꿔줌
+   
+   - map을 사용해 ul로 보여주기
+   
+   ```js
+   function App() {
+     const [loading, setLoading] = useState(true);
+     const [coins, setCoins] = useState([]);
+     useEffect(() => {
+       fetch("https://api.coinpaprika.com/v1/tickers")
+         .then((response) => response.json())
+         .then((json) => {
+           setCoins(json);
+           setLoading(false);
+         });
+     }, [])
+     return (
+       <div>
+         <h1>The Coins!({coins.length})</h1>
+         {loading ? <strong>Loading...</strong> : null}
+         <ul>
+           {coins.map((coin) => <li key={coin.id}>{coin.name} ({coin.symbol}): {coin.quotes.USD.price} USD</li>)}
+         </ul>
+       </div>
+     );
+   }
+   ```
