@@ -1120,6 +1120,7 @@ const onSubmit = (event) => {
 ## Coin Tracker
 
 1. coin 정보를 보여주기전에 loading 화면을 띄우고, loading 화면을 지우고 coin 정보를 list로 보여줌
+   
    - fetch로 API 가져오기
    
    - response 를 받아 setCoins 함수로 state변경 후 loading 을 false 로 바꿔줌
@@ -1149,3 +1150,49 @@ const onSubmit = (event) => {
      );
    }
    ```
+
+2. 자신의 돈으로 선택한 coin을 얼만큼 구매할 수 있는지 알려주는 코드
+
+```js
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [cost, setCost] = useState(1);
+  const handleInput = (event) => {setAmount(event.target.value)};
+  const onChange = (event) => {setCost(event.target.value)};
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, [])
+  return (
+    <div>
+      <h1>The Coins!{loading ? "" : `(${coins.length})`}</h1>
+      {loading ? <strong>Loading...</strong> : 
+      <select onChange={onChange}>
+        <option>Select Coin!</option>
+      {coins.map((coin) => (
+        <option 
+        key={coin.id}
+        value={coin.quotes.USD.price}
+        >{coin.name} ({coin.symbol}) : ${coin.quotes.USD.price}</option>
+      ))}
+    </select>}
+    <h2>Please enter the amount you have</h2>
+    <form>
+      <input 
+       value={amount}
+       type="number"
+       onChange={handleInput}
+       placeholder="dollar"
+      /> $
+    </form>
+    <h2>you can get {amount/cost} coins!</h2>
+    </div>
+  );
+}
+```
