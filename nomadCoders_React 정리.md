@@ -980,8 +980,6 @@ function App() {
   }, [keyword]); //keyword가 변할 때만 실행
 ```
 
-
-
 ## Cleanup
 
 1. state가 바뀔 때 component를 보이게 하거나, 숨기기
@@ -1066,8 +1064,8 @@ function App() {
     }
     setToDo("");
   };
-    
-    
+
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -1078,7 +1076,7 @@ function App() {
         placeholder="Write your to do..."/>
         <button>Add To Do</button>
       </form>
-      
+
     </div>
   );
 ```
@@ -1105,4 +1103,8 @@ const onSubmit = (event) => {
   };
 ```
 
+- map 함수 : array.map() ->array의 모든 element에 함수를 실행해 다른 값으로 바꾸게 해줌, 새로운 array를 return
 
+- Each child in a list should have a unique "key" prop.
+  
+  - component의 list 를 render 할 때 고유한 key값을 넣어야함
