@@ -1316,7 +1316,7 @@ function App() {
            </ul>
      </div>
        )
-       
+   
    }
    
    Movie.propTypes = {
@@ -1350,7 +1350,7 @@ function App() {
    useEffect(() => {
     getMovies();
    },[]);
-   
+
   return <div>{loading ? <h1>Loading...</h1> : 
   <div>{movies.map((movie) => 
   <Movie 
@@ -1365,6 +1365,72 @@ function App() {
 }
 ```
 
-
-
 ## React Router
+
+1. npm install react-rounter-dom
+
+2. url을 보여주는 컴포넌트
+   
+   -> url에 따라 다른 컴포넌트를 보여줌으로써 페이지 전환 역할
+   
+   - home route: 모든 영화를 보여줌 , App 컴포넌트 전체를 갖고 있음 -> App.js는 라우터를 렌더링
+   
+   - movie route: 하나의 영화만 보여줌
+
+3. Route 종류
+   
+   - Hash Router
+   
+   - Browser Router
+     
+     import Router, Switch, Route
+     
+     - Switch는 한번에 하나의 Route를 렌디링 할 수 있게 해줌 
+     
+     - Switch컴포넌트가 Routes컴포넌트로 대체되었습니다.  
+       Switch -> Routes  
+     
+     - Route컴포넌트 사이에 자식 컴포넌트를 넣지 않고, element prop에 자식 컴포넌트를 할당하도록 바뀌었습니다.  
+       Route path="/" element={< Home / >}
+
+4. Route에 routes(page) element 를 할당함
+
+```js
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
+import Home from "./routes/Home.js";
+import Detail from "./routes/Detail.js"
+
+function App() {
+ return <Router>
+    <Routes>
+        <Route path="/movie" element={<Detail/>} />
+        <Route path="/" element={<Home/>} />
+    </Routes>
+ </Router>;
+}
+
+export default App;
+```
+
+5. 하나의 Route에서 다른 Route로 이동하기
+   
+   - a 태그 사용 : 화면 전체가 재실행됨 -> react 에서는 link 컴포넌트로 브라우저 새로고침 없이도 유저를 다른 페이지로 이동시켜주는 컴포넌트 
+   
+   - 영화 제목을 누르면 Detail로 이동
+
+```js
+import {Link } from "react-router-dom";
+
+function Movie({coverImg, title, summary, genres}){
+    return (
+    <div>
+        <img src={coverImg} alt="" />
+        <h2>
+            <Link to="/movie">{title}</Link>
+        </h2>
+```
