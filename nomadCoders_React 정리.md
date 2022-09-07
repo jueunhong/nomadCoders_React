@@ -1434,3 +1434,21 @@ function Movie({coverImg, title, summary, genres}){
             <Link to="/movie">{title}</Link>
         </h2>
 ```
+
+6. url 변수 넣기
+   
+   - movie마다 id가 url에 나타나도록 동작 
+   
+   - movie/:id
+   
+   - Movie 컴포넌트 props로 id줘야함 
+
+
+
+- url 에 있는 movie id를 알아내서 Detail 컴포넌트를 만들어야함
+  
+  - useParams 함수 - react router가 url의 변수를 넘겨줌 
+  
+  - id를 가지고 API에 요청 보내야 함
+  
+  - await은 async 함수 내부에 있지 않으면 사용할 수 없음
